@@ -5,8 +5,10 @@
   "prefix": "flight-workspace",
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/passenger",
         "index": "apps/passenger/src/index.html",
@@ -24,7 +26,11 @@
           "apps/flight-app/src/assets/css/demo.css",
           "apps/flight-app/src/assets/css/themify-icons.css"
         ],
-        "scripts": []
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/passenger/webpack.config.js"
+        },
+        "commonChunk": false
       },
       "configurations": {
         "production": {
@@ -46,7 +52,10 @@
               "with": "apps/passenger/src/environments/environment.prod.ts"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/passenger/webpack.prod.config.js"
+          }
         },
         "development": {
           "buildOptimizer": false,
@@ -60,7 +69,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@nrwl/angular:webpack-server",
       "configurations": {
         "production": {
           "browserTarget": "passenger:build:production"
@@ -69,12 +78,17 @@
           "browserTarget": "passenger:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 3000,
+        "publicHost": "http://localhost:3000"
+      }
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "ngx-build-plus:extract-i18n",
       "options": {
-        "browserTarget": "passenger:build"
+        "browserTarget": "passenger:build",
+        "extraWebpackConfig": "apps/passenger/webpack.config.js"
       }
     },
     "lint": {
@@ -88,12 +102,17 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/passenger"],
+      "outputs": [
+        "coverage/apps/passenger"
+      ],
       "options": {
         "jestConfig": "apps/passenger/jest.config.js",
         "passWithNoTests": true
       }
     }
   },
-  "tags": ["type:app", "domain:passenger"]
+  "tags": [
+    "type:app",
+    "domain:passenger"
+  ]
 }

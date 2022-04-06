@@ -6,7 +6,9 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/libs/logger-lib"],
+      "outputs": [
+        "dist/libs/logger-lib"
+      ],
       "options": {
         "project": "libs/logger-lib/ng-package.json"
       },
@@ -22,7 +24,9 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/logger-lib"],
+      "outputs": [
+        "coverage/libs/logger-lib"
+      ],
       "options": {
         "jestConfig": "libs/logger-lib/jest.config.js",
         "passWithNoTests": true
@@ -38,5 +42,8 @@
       }
     }
   },
-  "tags": ["type:util", "domain:shared"]
+  "tags": [
+    "type:util",
+    "domain:shared"
+  ]
 }

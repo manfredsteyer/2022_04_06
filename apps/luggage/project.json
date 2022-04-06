@@ -1,0 +1,115 @@
+{
+  "projectType": "application",
+  "root": "apps/luggage",
+  "sourceRoot": "apps/luggage/src",
+  "prefix": "flight-workspace",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/luggage",
+        "index": "apps/luggage/src/index.html",
+        "main": "apps/luggage/src/main.ts",
+        "polyfills": "apps/luggage/src/polyfills.ts",
+        "tsConfig": "apps/luggage/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/luggage/src/favicon.ico",
+          "apps/luggage/src/assets"
+        ],
+        "styles": [
+          "apps/luggage/src/styles.scss"
+        ],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/luggage/webpack.config.js"
+        },
+        "commonChunk": false
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/luggage/src/environments/environment.ts",
+              "with": "apps/luggage/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/luggage/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "luggage:build:production"
+        },
+        "development": {
+          "browserTarget": "luggage:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 3001,
+        "publicHost": "http://localhost:3001"
+      }
+    },
+    "extract-i18n": {
+      "executor": "ngx-build-plus:extract-i18n",
+      "options": {
+        "browserTarget": "luggage:build",
+        "extraWebpackConfig": "apps/luggage/webpack.config.js"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/luggage/src/**/*.ts",
+          "apps/luggage/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/apps/luggage"
+      ],
+      "options": {
+        "jestConfig": "apps/luggage/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": [
+    "domain:luggage",
+    "type:app"
+  ]
+}
